@@ -1,0 +1,1000 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataReliQ - UI Logic and Feasibility (v17 Mockup Companion)</title>
+<style>
+:root {
+  --navy: #0b1f3a;
+  --navy-2: #163257;
+  --teal: #0d9488;
+  --amber: #b45309;
+  --red: #b91c1c;
+  --blue: #2563eb;
+  --slate-900: #0f172a;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--slate-900);
+  line-height: 1.6;
+}
+a { color: inherit; }
+code {
+  font-family: Consolas, "Courier New", monospace;
+  background: #eaf2ff;
+  color: #17479e;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.92em;
+}
+ul { margin: 0; padding-left: 18px; }
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, var(--navy) 0%, #0e2746 100%);
+  color: rgba(255, 255, 255, 0.88);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 22px 18px 32px;
+}
+#sidebar::-webkit-scrollbar { width: 6px; }
+#sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 999px; }
+.sidebar-brand {
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 18px;
+}
+.sidebar-brand h1 { margin: 0; font-size: 20px; letter-spacing: 0.04em; }
+.sidebar-brand p { margin: 6px 0 0; font-size: 12px; color: rgba(255, 255, 255, 0.62); }
+.nav-group { margin-bottom: 18px; }
+.nav-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 8px;
+  padding: 0 6px;
+}
+.nav-link {
+  display: block;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.74);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.nav-link:hover,
+.nav-link:focus {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+#main { margin-left: 280px; min-height: 100vh; }
+.hero {
+  background:
+    radial-gradient(circle at top right, rgba(20, 184, 166, 0.18), transparent 32%),
+    linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: #ffffff;
+  padding: 48px 56px 38px;
+}
+.hero-eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.62);
+  margin-bottom: 14px;
+}
+.hero h2 { margin: 0 0 12px; font-size: 38px; line-height: 1.08; }
+.hero p {
+  margin: 0;
+  max-width: 860px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+.hero-stat {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.hero-stat strong {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+.hero-stat span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.68);
+}
+.content { padding: 30px 34px 60px; }
+.section {
+  margin-bottom: 28px;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.section h3 {
+  margin: 0;
+  padding: 22px 24px 8px;
+  font-size: 24px;
+}
+.section-desc {
+  margin: 0;
+  padding: 0 24px 22px;
+  color: var(--slate-600);
+  font-size: 14px;
+}
+.metric-card { border-top: 1px solid var(--slate-200); background: #fff; }
+.metric-card summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 24px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.metric-card summary::-webkit-details-marker { display: none; }`n.metric-body { padding: 0 24px 22px; }
+.metric-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.metric-table td {
+  border-top: 1px solid var(--slate-200);
+  padding: 12px 10px;
+  vertical-align: top;
+  font-size: 14px;
+}
+.metric-table td:first-child {
+  width: 180px;
+  font-weight: 700;
+  color: var(--slate-700);
+}
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--slate-200);
+  background: var(--slate-100);
+  color: var(--slate-700);
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  padding: 0 24px 22px;
+}
+.overview-card {
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  padding: 16px;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+}
+.overview-card h4 { margin: 0 0 8px; font-size: 15px; }
+.overview-card p { margin: 0; font-size: 13px; color: var(--slate-600); }
+@media (max-width: 960px) {
+  #sidebar { position: static; width: 100%; height: auto; }
+  #main { margin-left: 0; }
+  .hero, .content { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>DataReliQ v17</h1>
+    <p>UI Logic and Feasibility Mapping for the v17 mockup</p>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Document</div>
+    <a class="nav-link" href="#overview">Overview</a>
+    <a class="nav-link" href="#setup">Setup Flow</a>
+    <a class="nav-link" href="#global">Global Controls</a>
+    <a class="nav-link" href="#freshness">Freshness</a>
+    <a class="nav-link" href="#sla">SLA</a>
+    <a class="nav-link" href="#pipeline">Pipeline Monitor</a>
+    <a class="nav-link" href="#execution-logs">Execution Logs</a>
+    <a class="nav-link" href="#reports">Reports</a>
+    <a class="nav-link" href="#settings">Settings</a>
+    <a class="nav-link" href="#assumptions">Assumptions</a>
+  </div>
+</nav>
+
+<main id="main">
+  <section class="hero">
+    <div class="hero-eyebrow">Companion Logic Document</div>
+    <h2>UI Logic and Feasibility Mapping</h2>
+    <p>
+      This document translates the <code>DataReliQ_v17 1.html</code> mockup into an implementable
+      product logic specification, using the structure and style of the existing v12 logic
+      companion as reference. The v17 mockup introduces a dedicated setup experience, sidebar
+      navigation, embedded stale-analysis inside Freshness, a Reports workspace, and an AI insights
+      side panel.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>9</strong><span>Primary product areas documented</span></div>
+      <div class="hero-stat"><strong>31</strong><span>Mapped UI logic items</span></div>
+      <div class="hero-stat"><strong>Snowflake</strong><span>Primary system-of-record assumption</span></div>
+      <div class="hero-stat"><strong>v17</strong><span>Mockup baseline covered by this document</span></div>
+    </div>
+  </section>
+
+  <div class="content">
+    <section id="overview" class="section">
+      <h3>Overview</h3>
+      <p class="section-desc">
+        The v17 mockup is a single-page application with two top-level states: a first-run setup
+        experience (<code>#setup-page</code>) and the operational dashboard shell
+        (<code>#dashboard-app</code>). Dashboard navigation is sidebar-driven and each primary area
+        swaps a section panel via <code>switchSection(event, name)</code>.
+      </p>
+      <div class="overview-grid">
+        <div class="overview-card">
+          <h4>Top-Level Product States</h4>
+          <p>Setup is shown before monitoring is complete. After setup confirmation or skip, the dashboard shell becomes the active experience.</p>
+        </div>
+        <div class="overview-card">
+          <h4>Shared Controls</h4>
+          <p>Date range, compute, export, notifications, and live query scanning are global controls that affect or support multiple modules.</p>
+        </div>
+        <div class="overview-card">
+          <h4>Configuration Model</h4>
+          <p>Settings and module configuration appear both during setup and later in the Settings section, indicating reuse of one canonical configuration layer.</p>
+        </div>
+        <div class="overview-card">
+          <h4>Major v17 Change</h4>
+          <p>Stale-table analysis is no longer a separate main tab. It now lives inside the Freshness area as a drill-down trend and filter experience.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="setup" class="section">
+      <h3>Setup Flow</h3>
+      <p class="section-desc">
+        The setup experience guides users through permissions, access scope, connection testing, module configuration, and final confirmation before showing the main dashboard.
+      </p>
+
+      <details class="metric-card" id="SF-01" open>
+        <summary>
+          <span class="metric-title">Application Shell Selection and Entry State</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>The setup view contains sub-tabs for Apps, DATARELIQ_APP, and DATARELIQ_STREAMLIT.</td></tr>
+            <tr><td>Business logic</td><td>The selected app surface changes the setup context but should not fork the core monitoring model.</td></tr>
+            <tr><td>Backend logic</td><td>Persist the app shell as a presentation preference in CONFIG.SETTINGS.</td></tr>
+            <tr><td>Snowflake source</td><td>None. This is application metadata.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">Client setup state</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show a short description below each app tab so users know whether they are choosing deployment mode, runtime host, or simply a documentation scope.</td></tr>
+            <tr><td>Formula / calculation</td><td>No numeric KPI. <code>active_app = selected_tab</code>; setup entry state is resolved as <code>show_setup = !setup_complete</code>.</td></tr>
+            <tr><td>User-configured values</td><td><code>app_shell</code>, optional deployment target, default landing experience, and whether setup is mandatory before dashboard access.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SF-02">
+        <summary>
+          <span class="metric-title">Mandatory Requirements and Privilege Grant Modal</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A requirements block lets users review and grant the required privileges.</td></tr>
+            <tr><td>Business logic</td><td>Users should understand prerequisites before DataReliQ reads metadata or warehouse objects.</td></tr>
+            <tr><td>Backend logic</td><td>Render the permission checklist and re-check grants when the user refreshes status.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SHOW GRANTS TO ROLE</code>, <code>SHOW WAREHOUSES</code>, and optional metadata privilege checks.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETUP_STATE</span><span class="tag">Static SQL templates</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add a privilege-status checklist with pass/fail indicators so users can see exactly which permissions are still missing before they proceed.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>grant_coverage_pct = (granted_required_privileges / total_required_privileges) * 100</code>. Section is complete when coverage reaches <code>100%</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Monitoring role, selected warehouse, required privilege set, and any environment-specific privilege exceptions.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SF-03">
+        <summary>
+          <span class="metric-title">Grant Data Access SQL Block</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A read-only SQL block shows the grant statements required for monitored access.</td></tr>
+            <tr><td>Business logic</td><td>The SQL must stay copyable, auditable, and aligned to the selected role and object scope.</td></tr>
+            <tr><td>Backend logic</td><td>Render the SQL from a template using the selected role, warehouse, and scope context.</td></tr>
+            <tr><td>Snowflake source</td><td>None for the SQL block itself; privilege verification can use <code>SHOW GRANTS</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Template content</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add a <code>Copy SQL</code> action and a note clarifying that this step grants read access only, not write authority over monitored business data.</td></tr>
+            <tr><td>Formula / calculation</td><td>No dashboard KPI. The SQL block is rendered as <code>grant_sql = template(role, warehouse, selected_databases, selected_schemas)</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Role name, warehouse name, object scope placeholders, and whether standard/shared-database grant variants are shown.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SF-04">
+        <summary>
+          <span class="metric-title">Object Scope Selection: Databases, Schemas, and Tables</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>Tag-based selectors let users choose monitored databases, schemas, and tables.</td></tr>
+            <tr><td>Business logic</td><td>Selections cascade from database to schema to table and define the monitoring boundary.</td></tr>
+            <tr><td>Backend logic</td><td>Populate selectors from Snowflake metadata and persist scope rows to CONFIG.MONITORED_OBJECTS.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SHOW DATABASES</code>, <code>SHOW SCHEMAS IN DATABASE ...</code>, <code>INFORMATION_SCHEMA.TABLES</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.MONITORED_OBJECTS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Replace placeholder add handlers with searchable multi-select pickers and show a running selected-table count plus estimated compute footprint.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>monitored_table_count = explicit_selected_tables + inherited_tables_from_selected_schemas_or_databases</code>. Scope is the union of chosen databases, schemas, and tables after de-duplication.</td></tr>
+            <tr><td>User-configured values</td><td>Selected databases, schemas, tables, inclusion mode, and any exclusions that should stay out of monitoring.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SF-05">
+        <summary>
+          <span class="metric-title">Connection Configuration and Validation</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>The connection form captures the monitoring warehouse and monitored object scope.</td></tr>
+            <tr><td>Business logic</td><td>Users should validate access before saving the setup state.</td></tr>
+            <tr><td>Backend logic</td><td>Run a lightweight connection test and save the canonical settings after validation passes.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SHOW WAREHOUSES</code>, <code>SHOW DATABASES</code>, <code>SHOW SCHEMAS</code>, <code>INFORMATION_SCHEMA.TABLES</code>, and a trivial test query.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">DATA_RELIQ.CONFIG.MONITORED_OBJECTS</span><span class="tag">DATA_RELIQ.CONFIG.SETUP_STATE</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Disable <code>Save Changes</code> until the latest connection test passes, or clearly label save as draft-only to avoid false setup completion.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>connection_test_score = (passed_checks / total_checks) * 100</code>, where checks include authentication, warehouse visibility, metadata access, and monitored-object reachability.</td></tr>
+            <tr><td>User-configured values</td><td>Monitoring warehouse, warehouses to monitor or exclude, database/schema/table scope, service role, and test timeout.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SF-06">
+        <summary>
+          <span class="metric-title">Module Configuration Builder and Setup Summary</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>Setup includes four module cards with expandable configuration panels and a summary.</td></tr>
+            <tr><td>Business logic</td><td>These values become the initial thresholds and targets used by downstream KPIs and alerts.</td></tr>
+            <tr><td>Backend logic</td><td>Persist module rows in CONFIG.MODULE_METRICS and resolve canonical values into CONFIG.SETTINGS.</td></tr>
+            <tr><td>Snowflake source</td><td>None beyond the app's own config store.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">DATA_RELIQ.CONFIG.SETUP_STATE</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show which summary values are still defaults versus user-confirmed values, especially when the user chooses <code>Skip for now</code>.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>setup_completion_pct = (completed_required_sections / total_required_sections) * 100</code>. Module summaries are derived from the count of saved threshold rows per module.</td></tr>
+            <tr><td>User-configured values</td><td>Freshness thresholds, SLA targets, stale-table thresholds, pipeline definitions, and whether setup can be skipped with partial configuration.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="global" class="section">
+      <h3>Global Controls</h3>
+      <p class="section-desc">
+        These controls remain accessible across sections inside the dashboard shell and either affect the active data scope or support shared operational workflows.
+      </p>
+
+      <details class="metric-card" id="G-01" open>
+        <summary>
+          <span class="metric-title">Sidebar Navigation and Section Routing</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A sidebar routes users between Freshness, SLA, Pipeline, Logs, Reports, and Settings.</td></tr>
+            <tr><td>Business logic</td><td>Section switching should preserve global state like date range and loaded results.</td></tr>
+            <tr><td>Backend logic</td><td>Keep routing as client state and optionally mirror the active section in the URL hash.</td></tr>
+            <tr><td>Snowflake source</td><td>None. Client routing only.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Client state only</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add keyboard focus management and highlight the current section more strongly on narrow screens where the sidebar may collapse.</td></tr>
+            <tr><td>Formula / calculation</td><td>No numeric KPI. <code>active_section = clicked_nav_item</code>, and panel visibility is <code>section_name == active_section</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Default landing section, URL-hash persistence behavior, and optional role-based visibility of sidebar items.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="G-02">
+        <summary>
+          <span class="metric-title">Date Range Dropdown and Global Compute Run</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A shared date-range control works with the global Compute action.</td></tr>
+            <tr><td>Business logic</td><td>The chosen window becomes the common analysis range for metrics, charts, and reports.</td></tr>
+            <tr><td>Backend logic</td><td>Send the start and end dates into the orchestration procedure and track each run in RUN_LOG.</td></tr>
+            <tr><td>Snowflake source</td><td>Indirect only. The control triggers refresh procedures rather than querying one specific view.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.AUDIT.RUN_LOG</span><span class="tag">All relevant staging tables</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show last successful refresh time near the compute button and validate custom date ranges before the user clicks Apply.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>start_date</code> and <code>end_date</code> come from preset rules or custom input. Compute runs <code>refresh_window = [start_date, end_date]</code> and marks success when the orchestration status is <code>SUCCESS</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Default date preset, allowed custom-date span, orchestration timeout, and whether auto-refresh runs after a date-range change.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="G-03">
+        <summary>
+          <span class="metric-title">Notifications Bell</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A bell icon opens recent notifications and status events.</td></tr>
+            <tr><td>Business logic</td><td>Unread notifications should represent actionable changes across modules and severity levels.</td></tr>
+            <tr><td>Backend logic</td><td>Load recent notifications from an audit store and support unread-count retrieval.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.AUDIT.NOTIFICATION_LOG</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.AUDIT.NOTIFICATION_LOG</span><span class="tag">DATA_RELIQ.CONFIG.ALERT_RULES</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add badge counts, severity grouping, and direct links to the impacted KPI, table, task, or report row.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>unread_count = count(notification where is_read = false)</code>. Severity grouping can be calculated as <code>count(*) by severity</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Notification retention window, severity definitions, module-level notification sources, and mark-as-read behavior.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="G-04">
+        <summary>
+          <span class="metric-title">Export Menu</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A shared export menu offers CSV and PDF outputs for the active view.</td></tr>
+            <tr><td>Business logic</td><td>Exports should inherit the visible module, date range, and active filters.</td></tr>
+            <tr><td>Backend logic</td><td>Generate exports from the current staged dataset rather than recomputing synchronously.</td></tr>
+            <tr><td>Snowflake source</td><td>Depends on active section; typically reads latest staging views already refreshed by Compute.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Export job metadata</span><span class="tag">Module-specific staging tables</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Label exports with the active module so users know whether they are exporting the whole dashboard or only the current section.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>export_row_count = count(filtered_records_in_active_view)</code>. Export payload equals current section + active date range + active filters.</td></tr>
+            <tr><td>User-configured values</td><td>Allowed export formats, export scope rules, branding/template settings, and max row limits for CSV or PDF generation.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="G-05">
+        <summary>
+          <span class="metric-title">Live Activity Panel and Query Scan Workflow</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A live panel shows the latest query scan timestamp and recent operational activity.</td></tr>
+            <tr><td>Business logic</td><td>This workflow helps triage current issues without waiting for a full dashboard recompute.</td></tr>
+            <tr><td>Backend logic</td><td>Query recent Snowflake activity on demand and keep the result session-scoped unless auditing is required.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Session cache</span><span class="tag">Optional live-scan audit table</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Support drill-down into full error text, query ID copy, and links into execution logs or pipeline task details when a row maps to a known monitored pipeline.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>live_query_count = count(query_history where start_time &gt;= now() - scan_window)</code>. Latest scan timestamp is <code>max(scan_time)</code> for the session.</td></tr>
+            <tr><td>User-configured values</td><td>Live-scan window length, warehouses or roles to include, max rows returned, and whether scans are session-only or audited.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="G-06">
+        <summary>
+          <span class="metric-title">Sidebar Collapse and Responsive Shell</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A hamburger action collapses or expands the navigation shell.</td></tr>
+            <tr><td>Business logic</td><td>Responsive behavior must preserve access to the active module and global actions.</td></tr>
+            <tr><td>Backend logic</td><td>Store the UI preference locally if the product needs stable user-specific shell state.</td></tr>
+            <tr><td>Snowflake source</td><td>None.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Client preference state</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Animate the collapse state and preserve tooltip labels for navigation items when icon-only mode is introduced.</td></tr>
+            <tr><td>Formula / calculation</td><td>No numeric KPI. <code>sidebar_state = collapsed | expanded</code>, and shell layout width is derived from that state plus viewport size.</td></tr>
+            <tr><td>User-configured values</td><td>Default collapse state, mobile breakpoint, animation preference, and whether state persists per user.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="freshness" class="section">
+      <h3>Freshness</h3>
+      <p class="section-desc">
+        The freshness section combines summary KPI cards, a score distribution gauge, a historical trend, a table-level grid, and an embedded stale-table trend workflow filtered by selected tables.
+      </p>
+
+      <details class="metric-card" id="FM-01" open>
+        <summary>
+          <span class="metric-title">Freshness KPI Summary Cards</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>The top of the Freshness page shows summary cards for current table recency health.</td></tr>
+            <tr><td>Business logic</td><td>The cards summarize aggregate freshness and provide drill actions into at-risk details.</td></tr>
+            <tr><td>Backend logic</td><td>Aggregate the latest freshness snapshot and expose a canonical threshold model for the cards.</td></tr>
+            <tr><td>Snowflake source</td><td><code>INFORMATION_SCHEMA.TABLES</code> or ingestion audit metadata joined to configured freshness thresholds.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.FRESHNESS_METRICS</span><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Keep click-through behavior but visually indicate that the cards are interactive, especially for keyboard users and accessibility tooling.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>table_freshness_score = max(0, min(100, 100 - ((hours_since_update - expected_refresh_hours) / expected_refresh_hours) * 100))</code>. <code>overall_freshness = avg(table_freshness_score)</code>, <code>tables_at_risk = count(score &lt; warning_threshold)</code>, and <code>critical_tables = count(score &lt; critical_threshold or hours_since_update &gt; max_staleness_hours)</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Expected refresh interval per table or module, warning threshold, critical threshold, max staleness hours, and any module weighting rules.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="FM-02">
+        <summary>
+          <span class="metric-title">Freshness Score Distribution Gauge</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A gauge-style chart shows how monitored tables are distributed across freshness bands.</td></tr>
+            <tr><td>Business logic</td><td>The gauge buckets must align with the KPI thresholds and the grid status logic.</td></tr>
+            <tr><td>Backend logic</td><td>Aggregate the latest freshness snapshot by band and return counts plus the overall score.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.STAGING.FRESHNESS_METRICS</code> current snapshot.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.FRESHNESS_METRICS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show count labels or a compact legend near the chart so users can interpret the distribution without hover-only interactions.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>healthy_count = count(score &gt;= warning_threshold)</code>, <code>warning_count = count(score between critical_threshold and warning_threshold - 0.01)</code>, <code>critical_count = count(score &lt; critical_threshold)</code>. Gauge total is the sum of these counts.</td></tr>
+            <tr><td>User-configured values</td><td>Warning threshold, critical threshold, gauge band colors, and whether the center value displays average score or healthy percentage.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="FM-03">
+        <summary>
+          <span class="metric-title">Freshness Trend Line</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A time-series line shows freshness movement across the active date range.</td></tr>
+            <tr><td>Business logic</td><td>The chart should adapt the aggregation grain to the selected analysis window.</td></tr>
+            <tr><td>Backend logic</td><td>Read historical freshness snapshots and aggregate them into the required display grain.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.STAGING.FRESHNESS_METRICS</code> history.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.FRESHNESS_METRICS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add drill-through from chart points to the top contributing tables at that time slice.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>trend_score(period) = avg(table_freshness_score for snapshots in period)</code>. Period grain is hourly, daily, or weekly depending on the selected date range.</td></tr>
+            <tr><td>User-configured values</td><td>Date-range presets, aggregation grain, anomaly-annotation sensitivity, and whether missing periods should show gaps or zeros.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="FM-04">
+        <summary>
+          <span class="metric-title">Tables Monitored / Tables at Risk Grid</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A detailed grid lists tables, scores, stale hours, status, and last update time.</td></tr>
+            <tr><td>Business logic</td><td>The grid is the main drill-down surface for filtered at-risk investigation.</td></tr>
+            <tr><td>Backend logic</td><td>Read the latest table-level freshness rows and support all/at-risk filtering.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.STAGING.FRESHNESS_SCORES</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.FRESHNESS_SCORES</span><span class="tag">DATA_RELIQ.CONFIG.MONITORED_OBJECTS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add table search, sortable headers, and a direct row action for opening historical freshness details for the selected table.</td></tr>
+            <tr><td>Formula / calculation</td><td>Each row uses <code>hours_stale = current_timestamp - last_updated_at</code> in hours and the same <code>table_freshness_score</code> formula as FM-01. Grid filter rule: <code>at_risk_only = status in (WARNING, CRITICAL)</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Warning threshold, critical threshold, default sort order, at-risk default toggle, and any searchable columns or row limits.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="FM-05">
+        <summary>
+          <span class="metric-title">Embedded Stale-Table Trend Analysis</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A stale trend chart compares selected tables over time inside the Freshness section.</td></tr>
+            <tr><td>Business logic</td><td>This replaces the need for a standalone stale-table tab in the main navigation.</td></tr>
+            <tr><td>Backend logic</td><td>Store historical stale-series data at table grain so selected lines can be rendered on demand.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.STAGING.FRESHNESS_SCORES</code> history or a dedicated <code>STAGING.STALE_TABLE_HISTORY</code> view.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.STALE_TABLE_HISTORY</span><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show color consistency between checkbox labels, line series, and any table badges so users can match selected tables quickly.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>stale_hours(table, period) = max(0, observed_age_hours - expected_refresh_hours)</code>. The chart plots this value by time for all checked tables.</td></tr>
+            <tr><td>User-configured values</td><td>Expected refresh interval per selected table, default checked tables, chart aggregation grain, and stale-threshold bands for highlighting.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="FM-06">
+        <summary>
+          <span class="metric-title">Cross-Section Drill and Alert Alignment</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>Freshness cards and grid actions route users into deeper filtered views.</td></tr>
+            <tr><td>Business logic</td><td>Drill state and alert logic must stay aligned to the same threshold configuration.</td></tr>
+            <tr><td>Backend logic</td><td>Use canonical threshold fields so KPIs, grid states, reports, and alerts do not diverge.</td></tr>
+            <tr><td>Snowflake source</td><td>Shared staging and config sources already listed above.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span><span class="tag">DATA_RELIQ.STAGING.FRESHNESS_METRICS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Highlight the destination panel after auto-scroll so users immediately understand that the card action has changed the view state.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>alert_status = case when score &lt; critical_threshold then CRITICAL when score &lt; warning_threshold then WARNING else OK end</code>. Drill state preserves <code>date_range</code> and <code>scope_filter</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Warning and critical thresholds, scroll-to behavior, drill target defaults, and whether drill actions automatically enable the at-risk filter.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="sla" class="section">
+      <h3>SLA</h3>
+      <p class="section-desc">
+        The SLA section combines configuration-backed target values with trend visuals and a modal used to explain the logic behind each SLA KPI.
+      </p>
+
+      <details class="metric-card" id="SLA-01" open>
+        <summary>
+          <span class="metric-title">Overall SLA KPI</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>The lead SLA KPI shows an overall percentage and a freshness/uptime breakdown.</td></tr>
+            <tr><td>Business logic</td><td>Stakeholders should understand whether the value represents target posture, actual attainment, or both.</td></tr>
+            <tr><td>Backend logic</td><td>Resolve displayed values from saved settings and from staged compliance calculations.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.CONFIG.SETTINGS</code> plus optional SLA rollup staging.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">DATA_RELIQ.STAGING.SLA_COMPLIANCE</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Label target versus actual explicitly to prevent executive users from misreading target posture as achieved performance.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>overall_sla_pct = (freshness_compliance_pct * freshness_weight + performance_compliance_pct * performance_weight + uptime_compliance_pct * uptime_weight) / (freshness_weight + performance_weight + uptime_weight)</code>. If weights are not provided, use equal weighting.</td></tr>
+            <tr><td>User-configured values</td><td>Freshness, performance, and uptime SLA targets plus optional weights for each component in the overall score.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SLA-02">
+        <summary>
+          <span class="metric-title">Freshness, Performance, and Uptime SLA Cards</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>Three supporting cards show the component SLA definitions and values.</td></tr>
+            <tr><td>Business logic</td><td>These cards explain the rules behind freshness, latency, and uptime compliance.</td></tr>
+            <tr><td>Backend logic</td><td>Persist the structured SLA inputs in settings and join them to staged performance data.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.CONFIG.SETTINGS</code>, <code>DATA_RELIQ.STAGING.PIPELINE_HEALTH</code>, and freshness rollups.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span><span class="tag">DATA_RELIQ.STAGING.PIPELINE_HEALTH</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Display both the configured threshold and the latest actual measure on each card so users can compare posture versus performance at a glance.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>freshness_compliance_pct = (fresh_tables_within_sla / total_monitored_tables) * 100</code>, <code>latency_compliance_pct = (runs_within_target / total_runs) * 100</code>, and <code>uptime_pct = (successful_pipeline_intervals / total_pipeline_intervals) * 100</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Freshness SLA %, max staleness, RTO, task target duration, latency SLA %, uptime SLA %, max consecutive failures, and idle warehouse tolerance.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SLA-03">
+        <summary>
+          <span class="metric-title">SLA Compliance Trend Chart</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A time-series chart shows SLA posture and drift over the selected range.</td></tr>
+            <tr><td>Business logic</td><td>Users should be able to compare trend movement without confusing target lines with actual performance.</td></tr>
+            <tr><td>Backend logic</td><td>Stage compliance snapshots by time bucket so the chart can render overall and component trends.</td></tr>
+            <tr><td>Snowflake source</td><td>Derived from freshness and pipeline staging plus configured SLA targets.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.SLA_COMPLIANCE</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Allow toggling individual series so users can isolate whether a dip was driven by freshness, performance, or uptime.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>sla_trend(period) = avg(overall_sla_pct or component_sla_pct)</code> for each time bucket in the selected range. Component series are calculated using the same formulas described in SLA-01 and SLA-02.</td></tr>
+            <tr><td>User-configured values</td><td>Trend aggregation grain, displayed component series, SLA weights, and whether the chart shows target lines, actuals, or both.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SLA-04">
+        <summary>
+          <span class="metric-title">SLA Insights Modal</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A modal explains the selected SLA KPI using chips, explanations, and guidance.</td></tr>
+            <tr><td>Business logic</td><td>The modal should clarify why the KPI is healthy or drifting and what contributed to the variance.</td></tr>
+            <tr><td>Backend logic</td><td>Populate the modal from staged compliance data and deterministic explanation logic.</td></tr>
+            <tr><td>Snowflake source</td><td>Same staging sources as the selected KPI, optionally augmented by AI explanation services.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.SLA_COMPLIANCE</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Include a direct link from the modal to the underlying pipeline or freshness rows that caused the variance.</td></tr>
+            <tr><td>Formula / calculation</td><td>The modal explains <code>variance = actual_pct - target_pct</code> and <code>breach_count = count(periods where actual_pct &lt; target_pct)</code> for the selected KPI.</td></tr>
+            <tr><td>User-configured values</td><td>Selected KPI weights and targets, insight text thresholds, and which breach drivers or remediation hints should be shown.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="pipeline" class="section">
+      <h3>Pipeline Monitor</h3>
+      <p class="section-desc">
+        The pipeline section focuses on runtime health, task success rate, error shape, and the most problematic tasks in the monitored environment.
+      </p>
+
+      <details class="metric-card" id="PM-01" open>
+        <summary>
+          <span class="metric-title">Task Success Rate Chart</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A pipeline chart summarizes task success rate over time.</td></tr>
+            <tr><td>Business logic</td><td>Success rate should be calculated only for in-scope monitored tasks and the active date range.</td></tr>
+            <tr><td>Backend logic</td><td>Read task history, normalize task states, and stage aggregate success metrics.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SNOWFLAKE.ACCOUNT_USAGE.TASK_HISTORY</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.PIPELINE_HEALTH</span><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Offer a hover breakdown with run count, failure count, and longest runtime for the selected period.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>task_success_rate_pct = (successful_runs / total_completed_runs) * 100</code>. Exclude cancelled or skipped runs unless the business chooses to classify them as failures.</td></tr>
+            <tr><td>User-configured values</td><td>Included pipelines/tasks, success-state mapping, cancellation handling, and chart aggregation window.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="PM-02">
+        <summary>
+          <span class="metric-title">Pipeline Error Breakdown</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A breakdown chart groups failures by error category.</td></tr>
+            <tr><td>Business logic</td><td>Error categories should be stable enough for reporting, triage, and alerting.</td></tr>
+            <tr><td>Backend logic</td><td>Normalize raw error text into named categories during staging refresh.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SNOWFLAKE.ACCOUNT_USAGE.TASK_HISTORY</code> and possibly <code>QUERY_HISTORY</code> for richer error text.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.PIPELINE_FAILURES</span><span class="tag">DATA_RELIQ.STAGING.PIPELINE_HEALTH</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Allow clicking a category to filter the failing-task list and execution-log table to matching failures.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>error_category_share_pct = (failures_in_category / total_failures) * 100</code>. Category labels come from normalized error classification rules.</td></tr>
+            <tr><td>User-configured values</td><td>Error-category taxonomy, regex or rules for classification, date window, and whether unknown errors should appear as a separate bucket.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="PM-03">
+        <summary>
+          <span class="metric-title">Top Failing Tasks Table</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A table ranks the tasks with the highest failure counts in the selected window.</td></tr>
+            <tr><td>Business logic</td><td>Rows should expose the tasks with the highest operational impact and recent failure patterns.</td></tr>
+            <tr><td>Backend logic</td><td>Aggregate task-level failure counts, runtimes, and last-failure timestamps in staging.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SNOWFLAKE.ACCOUNT_USAGE.TASK_HISTORY</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.STAGING.PIPELINE_FAILURES</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Support row expansion into failure history and links to relevant execution-log entries or SLA latency explanations.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>failure_count = count(failed_runs by task)</code>, <code>avg_runtime = avg(run_duration_seconds)</code>, and <code>last_failure_at = max(failure_timestamp)</code>. Ranking is typically by <code>failure_count desc</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Included task set, ranking window, tie-break sort, and whether the table ranks by failures, runtime, or most recent impact.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="execution-logs" class="section">
+      <h3>Execution Logs</h3>
+      <p class="section-desc">
+        Execution logs provide a chronological operational audit of refreshes, module runs, and task outcomes, including expandable detail rows.
+      </p>
+
+      <details class="metric-card" id="EL-01" open>
+        <summary>
+          <span class="metric-title">Log Table and Status Mapping</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A log table lists execution events with statuses like success, failed, warning, and running.</td></tr>
+            <tr><td>Business logic</td><td>The status model must stay consistent across UI, alerts, and audit views.</td></tr>
+            <tr><td>Backend logic</td><td>Write orchestration and module run outcomes into AUDIT.RUN_LOG with status and duration.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.AUDIT.RUN_LOG</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.AUDIT.RUN_LOG</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add filters for module, status, and date range to make the log table usable during incident triage.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>run_duration = end_time - start_time</code>. Status is mapped from orchestration outcome, for example <code>SUCCESS</code>, <code>FAILED</code>, <code>RUNNING</code>, or <code>WARNING</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Log-retention period, status mapping rules, default filters, pagination size, and which execution types should be logged.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="EL-02">
+        <summary>
+          <span class="metric-title">Expandable Log Detail Rows</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>Each log row can expand to reveal diagnostic details inline.</td></tr>
+            <tr><td>Business logic</td><td>Users should be able to inspect runtime, retries, error text, and object context without leaving the page.</td></tr>
+            <tr><td>Backend logic</td><td>Load detailed run diagnostics by run ID and keep raw error context available for drill-down.</td></tr>
+            <tr><td>Snowflake source</td><td><code>DATA_RELIQ.AUDIT.RUN_LOG</code> joined to task or query audit sources where needed.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.AUDIT.RUN_LOG</span><span class="tag">DATA_RELIQ.STAGING.PIPELINE_FAILURES</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Preserve the expanded row after refresh if the same run is still visible, so users do not lose context while troubleshooting.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>retry_count = count(retry_events per run_id)</code> and <code>detail_payload = all diagnostic fields linked to the selected run_id</code>. No separate KPI is required.</td></tr>
+            <tr><td>User-configured values</td><td>Diagnostic fields to expose, raw error-text visibility, default expanded state, and permissions for sensitive execution details.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="reports" class="section">
+      <h3>Reports</h3>
+      <p class="section-desc">
+        Reports gives users a dedicated workspace for viewing generated outputs and submitting new report requests with module selection, date range, recipients, and output formats.
+      </p>
+
+      <details class="metric-card" id="RPT-01" open>
+        <summary>
+          <span class="metric-title">Generated Reports Table</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A reports table lists previously generated CSV and PDF outputs.</td></tr>
+            <tr><td>Business logic</td><td>Each row should represent a durable report artifact with metadata and download actions.</td></tr>
+            <tr><td>Backend logic</td><td>Store report job metadata and output locations so the UI can list, download, and remove artifacts.</td></tr>
+            <tr><td>Snowflake source</td><td>Report content comes from module staging tables; report metadata can be stored in Snowflake or an app database.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.AUDIT.REPORT_RUNS</span><span class="tag">Stored report artifacts</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show generation status and failure reason if a report job is still processing or ended with an error.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>report_artifact_count = count(saved_report_jobs)</code>. A row status can be derived as <code>COMPLETED</code>, <code>FAILED</code>, or <code>PROCESSING</code> from the job state.</td></tr>
+            <tr><td>User-configured values</td><td>Retention period, downloadable formats, storage destination, delete permissions, and whether re-downloads require regeneration.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="RPT-02">
+        <summary>
+          <span class="metric-title">New Report Request Drawer</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A drawer collects report name, included modules, date range, recipients, and formats.</td></tr>
+            <tr><td>Business logic</td><td>Users should be able to request ad hoc reports without changing monitoring configuration.</td></tr>
+            <tr><td>Backend logic</td><td>Validate the request, enqueue a report job, and store a pending report-run record.</td></tr>
+            <tr><td>Snowflake source</td><td>Uses the same staging tables as the included modules: freshness, SLA, pipeline, and execution logs where relevant.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.AUDIT.REPORT_RUNS</span><span class="tag">Module staging tables</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show validation inline when no module is selected or when neither CSV nor PDF is chosen.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>report_scope = selected_modules x selected_date_range x selected_formats</code>. Submission is valid when <code>module_count &gt; 0</code> and <code>format_count &gt; 0</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Report name, included modules, date range, recipient email(s), output formats, and optional report branding/template selection.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="RPT-03">
+        <summary>
+          <span class="metric-title">Report Scheduling Readiness</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>The current design supports ad hoc reporting and is structurally ready for scheduling.</td></tr>
+            <tr><td>Business logic</td><td>Future scheduling should reuse the same scope, recipient, and format model rather than split the workflow.</td></tr>
+            <tr><td>Backend logic</td><td>Introduce a schedule definition table and create report runs from saved recurrence rules.</td></tr>
+            <tr><td>Snowflake source</td><td>None specific; this is application scheduling metadata.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.REPORT_SCHEDULES</span><span class="tag">DATA_RELIQ.AUDIT.REPORT_RUNS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Design the drawer so a future schedule control can slot in without changing the current request model.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>next_run_at = evaluate(schedule_rule, current_time)</code>. For schedule health, <code>missed_runs = expected_runs - executed_runs</code> over a reporting period.</td></tr>
+            <tr><td>User-configured values</td><td>Recurrence rule, delivery recipients, default module set, default date window, and format preferences for scheduled runs.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="settings" class="section">
+      <h3>Settings</h3>
+      <p class="section-desc">
+        Settings centralizes runtime controls, AI configuration, connection details, module thresholds, and notification recipients. Much of this mirrors the setup flow but becomes editable after onboarding.
+      </p>
+
+      <details class="metric-card" id="SET-01" open>
+        <summary>
+          <span class="metric-title">Scan Frequency Control</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A settings panel controls the automated scan frequency.</td></tr>
+            <tr><td>Business logic</td><td>Scan cadence affects data freshness, compute cost, and alert timeliness.</td></tr>
+            <tr><td>Backend logic</td><td>Persist the selected interval in settings and bind it to the orchestrated scheduler.</td></tr>
+            <tr><td>Snowflake source</td><td>None directly; this is scheduler configuration.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">Scheduler metadata</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show an estimated monthly run count or cost impact when users choose aggressive scan frequencies.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>next_scan_at = last_scan_at + configured_interval</code>. Approximate monthly runs: <code>(30 * 24 * 60) / interval_minutes</code>.</td></tr>
+            <tr><td>User-configured values</td><td>Scan interval value, interval unit, minimum/maximum allowed frequency, and whether scans pause outside business hours.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SET-02">
+        <summary>
+          <span class="metric-title">AI Integration Settings</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>An accordion captures provider settings, API credentials, and AI enablement.</td></tr>
+            <tr><td>Business logic</td><td>AI settings determine whether the product can generate insights and narrative explanations.</td></tr>
+            <tr><td>Backend logic</td><td>Store non-secret references in settings and keep secrets in a secure store with connection testing.</td></tr>
+            <tr><td>Snowflake source</td><td>None required for the provider check; the feature later consumes staged monitoring data as prompt context.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Secure secret storage</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show exactly what AI features become available when the toggle is on, so users understand the value of connecting a provider.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>ai_enabled = insights_toggle and valid_provider_credentials</code>. Connection success is binary: <code>test_result = PASS | FAIL</code>.</td></tr>
+            <tr><td>User-configured values</td><td>AI provider, API key, Azure endpoint if applicable, insight toggle state, model name, and request timeout or guardrail preferences.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SET-03">
+        <summary>
+          <span class="metric-title">Connection Settings Accordion</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>The post-setup settings page reuses the connection-management form.</td></tr>
+            <tr><td>Business logic</td><td>Users should be able to change the monitored scope without losing historical analysis.</td></tr>
+            <tr><td>Backend logic</td><td>Save updated connection scope into settings and monitored-object config tables.</td></tr>
+            <tr><td>Snowflake source</td><td><code>SHOW WAREHOUSES</code>, <code>SHOW DATABASES</code>, <code>SHOW SCHEMAS</code>, <code>INFORMATION_SCHEMA.TABLES</code>.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span><span class="tag">DATA_RELIQ.CONFIG.MONITORED_OBJECTS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Warn when a scope change will remove objects from active monitoring or change the interpretation of dashboard comparisons.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>connection_test_score = (passed_checks / total_checks) * 100</code>, using the same validation rules as the setup connection test.</td></tr>
+            <tr><td>User-configured values</td><td>Monitoring warehouse, observed warehouses, database/schema/table scope, role, test timeout, and any excluded objects.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SET-04">
+        <summary>
+          <span class="metric-title">Module Configuration Accordions</span>
+          </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>Settings mirrors the setup-time module configuration builders.</td></tr>
+            <tr><td>Business logic</td><td>Threshold edits should immediately affect KPIs, alerts, reports, and AI context.</td></tr>
+            <tr><td>Backend logic</td><td>Persist module rows and resolve downstream canonical values from the latest saved configuration.</td></tr>
+            <tr><td>Snowflake source</td><td>None directly beyond configuration storage.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.MODULE_METRICS</span><span class="tag">DATA_RELIQ.CONFIG.SETTINGS</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Show last-updated timestamps and who changed the configuration when multiple admins share the workspace.</td></tr>
+            <tr><td>Formula / calculation</td><td>Configuration values feed downstream formulas such as freshness score, SLA compliance, stale-hours, and task success rate. Resolver rule: <code>canonical_setting = latest_saved_module_value</code>.</td></tr>
+            <tr><td>User-configured values</td><td>All module thresholds, units, target percentages, per-task duration goals, and whether values are global defaults or object-specific overrides.</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="metric-card" id="SET-05">
+        <summary>
+          <span class="metric-title">Notification Recipients and Alert Routing</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>A recipients table controls who receives alert notifications.</td></tr>
+            <tr><td>Business logic</td><td>Recipients should be able to subscribe by module or severity instead of receiving every alert.</td></tr>
+            <tr><td>Backend logic</td><td>Save recipient rows and alert-routing preferences in configuration tables.</td></tr>
+            <tr><td>Snowflake source</td><td>None required beyond config persistence.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">DATA_RELIQ.CONFIG.NOTIFICATION_RECIPIENTS</span><span class="tag">DATA_RELIQ.CONFIG.ALERT_RULES</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Add module-level or severity-level subscriptions so recipients can opt into only the alerts that matter to them.</td></tr>
+            <tr><td>Formula / calculation</td><td><code>recipient_match_count = count(recipients where module = alert_module and severity &gt;= alert_severity_threshold)</code>. Delivery list is the union of matched recipients after de-duplication.</td></tr>
+            <tr><td>User-configured values</td><td>Recipient emails, subscribed modules, severity thresholds, mute rules, and whether report-delivery contacts are shared with alert routing.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+    <section id="assumptions" class="section">
+      <h3>Assumptions</h3>
+      <p class="section-desc">
+        These assumptions were carried over from the reference logic document and adjusted to match the v17 mockup structure.
+      </p>
+
+      <details class="metric-card" id="ASM-01" open>
+        <summary>
+          <span class="metric-title">Implementation Assumptions and Open Notes</span>
+        </summary>
+        <div class="metric-body">
+          <table class="metric-table">
+            <tr><td>What it is</td><td>This section records the implementation assumptions used to interpret the mockup.</td></tr>
+            <tr><td>Business logic</td><td>The notes reduce ambiguity about product boundaries, platform behavior, and source-system expectations.</td></tr>
+            <tr><td>Backend logic</td><td>Treat these assumptions as implementation constraints that should be revisited when the scope changes.</td></tr>
+            <tr><td>Snowflake source</td><td>None. This section documents assumptions rather than querying a source system.</td></tr>
+            <tr><td>Config / staging</td><td><div class="tag-row"><span class="tag">Documentation only</span></div></td></tr>
+            <tr><td>Recommended UI</td><td>Keep assumption notes clearly separated from executable logic so teams do not confuse design constraints with live metric rules.</td></tr>
+            <tr><td>Formula / calculation</td><td>No numeric formula. This section documents implementation assumptions and boundary conditions used to interpret the mockup.</td></tr>
+            <tr><td>User-configured values</td><td>None directly; revise these notes only when platform assumptions, source systems, or product boundaries change.</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+  </div>
+</main>
+</body>
+</html>
+
+
+
+
